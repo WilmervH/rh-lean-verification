@@ -53,7 +53,13 @@ step axioms-replay box lake env lean /replay/Audit.lean
 
 # Kernel replays and the export run at the same time.
 step leanchecker box lake env leanchecker --fresh Main &
-step lean4lean box lake env /tools/lean4lean/.lake/build/bin/lean4lean Main &
+# lean4lean checks every module under these prefixes, each against its imports, multithreaded.
+# (`lean4lean Main` alone checks only the declarations in Main.) With every root at once and the
+# default thread count it peaked above 400 GB; set L4L_ROOTS to fewer roots per run on smaller hosts.
+L4L_ROOTS=${L4L_ROOTS:-"Init Std Lean LeanSearchClient Qq Aesop Batteries ImportGraph Plausible ProofWidgets Mathlib
+  BuildAid CompanionTheory Development Formalism GroundTheory Lemmata Main PositivityTheory
+  ReciprocityTheory Statements Supplements"}
+step lean4lean box lake env /tools/lean4lean/.lake/build/bin/lean4lean $L4L_ROOTS &
 step export box bash -c 'lake env /tools/lean4export/.lake/build/bin/lean4export Main -- $(cat /sol/export-targets.txt) > /p2/solution.export'
 sha256sum "$WORK/p2/solution.export" > "$OUT/solution.export.sha256"
 
@@ -66,8 +72,16 @@ judge() {  # judge A|B|C
     lake comparator --config "$JUDGE/comparator-$1.json" \
     --challenge-from-export "$CHALLENGE" --solution-from-export "$WORK/p2/solution.export"
 }
-step comparator-A judge A &
-step comparator-B judge B &
-step con-leche-ron judge C &
+# Each Comparator run peaks at about 70 GB next to the kernel replays, so the runs start one at a
+# time, at least JUDGE_GAP seconds apart and only when JUDGE_MIN_GB of memory is available.
+JUDGE_GAP=${JUDGE_GAP:-600}
+JUDGE_MIN_GB=${JUDGE_MIN_GB:-200}
+first=1
+for c in A:comparator-A B:comparator-B C:con-leche-ron; do
+  [ "$first" = 1 ] || sleep "$JUDGE_GAP"
+  until [ "$(free -g | awk '/^Mem:/ {print $7}')" -ge "$JUDGE_MIN_GB" ]; do sleep 60; done
+  step "${c#*:}" judge "${c%%:*}" &
+  first=0
+done
 wait
 log "checks done"
