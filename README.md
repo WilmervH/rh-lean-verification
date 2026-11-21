@@ -28,8 +28,8 @@ which we also rebuild from source and compare.
 | 8 | Compiled Mathlib in the build tree unchanged; Mathlib rebuilt from source and compared with the official cache | **build tree: all 8,700 package `.olean` files identical to a clean clone. Rebuild from source: 8,689 identical, 1 differs, see [below](#mathlib-rebuild)** |
 | 9 | Axiom audit of the five theorems: only `propext`, `Quot.sound`, `Classical.choice` | **done, passes** ([our audit](results/checks/axioms.txt) and the replay project's `Audit.lean`) |
 | 10 | Fresh kernel replay: `leanchecker --fresh Main` (Lean v4.33.1) | running |
-| 11 | Export with lean4export, judged by `lake comparator` (Lean v4.36.0) with Comparator's own sandbox: Lean kernel, `leanchecker-paranoid`, nanoda; con-leche and con-ron run separately | running |
-| 12 | lean4lean (built for Lean v4.33.1) replay of the compiled files | running |
+| 11 | Export with lean4export, judged by `lake comparator` (Lean v4.36.0) with Comparator's own sandbox: Lean kernel, `leanchecker-paranoid`, nanoda; con-leche and con-ron run separately | **in progress.** Export: 61,570,595,788 bytes, SHA-256 `5ea74b91…f6be244e` ([full](results/phase2/solution.export.sha256)). **nanoda accepts the solution** ([log](results/phase2/comparator-B.partial.txt)). con-leche and con-ron decline to model `FunctorialResolution.EmbeddedResolution.PrincipalizationCertificate` (a reflexive member of a mutual block), so they cannot read this project; that is not a rejection ([log](results/phase2/con-leche-ron.partial.txt)). Lean kernel and `leanchecker-paranoid` still running |
+| 12 | lean4lean (built for Lean v4.33.1) replay of the compiled files | **in progress.** All roots in one multithreaded run peaked above 400 GB and was stopped; it reruns a few roots at a time after the Comparator runs |
 
 Results land in [results/](results/) as they are produced.
 
