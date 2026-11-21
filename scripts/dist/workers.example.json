@@ -1,0 +1,5 @@
+{
+  "hub":     {"hub": true,  "max_depth": 999, "batch": 400},
+  "worker1": {"hub": false, "max_depth": 149, "batch": 400},
+  "worker2": {"hub": false, "max_depth": 99,  "batch": 300}
+}

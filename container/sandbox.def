@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: debian:trixie-slim
+
+%post
+    apt-get update
+    apt-get install -y --no-install-recommends git ca-certificates procps bubblewrap python3 util-linux coreutils findutils
+    rm -rf /var/lib/apt/lists/*
