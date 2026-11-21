@@ -5,7 +5,9 @@ of GRH for Dirichlet L-functions, announced by Levent Alpöge on 2026-11-20 at
 <https://alpo.ge/remark.pdf>. Credit for the claimed proof belongs to its author. This repository
 contains only our scripts and results, not the submission.
 
-**Status: in progress.** The inputs are checked (below). The full build is running. No verdict yet.
+**Status: in progress.** The inputs are checked, the fresh build of all 175,187 modules is done with
+no failures, and the five theorems use only the three standard axioms. The kernel replays and
+Comparator runs are running. No verdict yet.
 
 "Independent" here means: we download the original archive ourselves, build all 175,187 modules
 from it in one fresh run, and check the result with our own runs of the kernel and of independent
@@ -22,12 +24,12 @@ which we also rebuild from source and compare.
 | 4 | Mathlib pin is the official `v4.33.1` tag | **done** |
 | 5 | Static scan of the source | **done**, see [docs/static-scan.md](docs/static-scan.md) |
 | 6 | Challenge export (the five statements, Mathlib only) rebuilt locally and compared with Deicyde's CI artifact | **done, byte-identical** |
-| 7 | Fresh, sandboxed build of all 175,187 modules with Lean v4.33.1 (`+Module:olean`), no network | running |
-| 8 | Compiled Mathlib in the build tree unchanged; Mathlib rebuilt from source and compared with the official cache | pending |
-| 9 | Axiom audit of the five theorems: only `propext`, `Quot.sound`, `Classical.choice` | pending |
-| 10 | Fresh kernel replay: `leanchecker --fresh Main` (Lean v4.33.1) | pending |
-| 11 | Export with lean4export, judged by `lake comparator` (Lean v4.36.0): Lean kernel, `leanchecker-paranoid`, nanoda, con-leche, con-ron, with Comparator's own sandbox | pending |
-| 12 | lean4lean replay of the compiled files | pending |
+| 7 | Fresh, sandboxed build of all 175,187 modules with Lean v4.33.1 (`+Module:olean`), no network | **done, 175,187/175,187 built, 0 failures** |
+| 8 | Compiled Mathlib in the build tree unchanged; Mathlib rebuilt from source and compared with the official cache | **build tree: all 8,700 package `.olean` files identical to a clean clone. Rebuild from source: 8,689 identical, 1 differs, see [below](#mathlib-rebuild)** |
+| 9 | Axiom audit of the five theorems: only `propext`, `Quot.sound`, `Classical.choice` | **done, passes** ([our audit](results/checks/axioms.txt) and the replay project's `Audit.lean`) |
+| 10 | Fresh kernel replay: `leanchecker --fresh Main` (Lean v4.33.1) | running |
+| 11 | Export with lean4export, judged by `lake comparator` (Lean v4.36.0) with Comparator's own sandbox: Lean kernel, `leanchecker-paranoid`, nanoda; con-leche and con-ron run separately | running |
+| 12 | lean4lean (built for Lean v4.33.1) replay of the compiled files | running |
 
 Results land in [results/](results/) as they are produced.
 
@@ -57,11 +59,29 @@ closures, and only 355 sit above depth 150, so most of the work parallelizes wel
 
 **Judging.** As in [Deicyde/riemann-hypothesis](https://github.com/Deicyde/riemann-hypothesis),
 the solution is exported inside the sandbox and judged by Lean v4.36.0's `lake comparator`
-against the challenge export, with the four external checkers split into two Comparator runs so
-they can run at the same time. Comparator needs unprivileged bubblewrap. On machines whose root
+against the challenge export ([scripts/02-checks.sh](scripts/02-checks.sh), configs in [judge/](judge/)).
+The external checkers are split into three Comparator runs that run at the same time: A adds
+`leanchecker-paranoid`, B adds nanoda, and C runs con-leche and con-ron. Deicyde's notes report that
+con-leche and con-ron refuse a reflexive member inside a mutual inductive block
+(`PrincipalizationCertificate`), and Comparator counts any checker failure as a rejection, so they
+are kept out of A and B and a failure of C is recorded as "cannot read this project". Comparator needs unprivileged bubblewrap. On machines whose root
 filesystem is an initramfs `rootfs`, bubblewrap cannot `pivot_root`;
 [scripts/with-bwrap.sh](scripts/with-bwrap.sh) moves a bind mount of `/` over the root in a private
 mount namespace first (the `switch_root` trick, unprivileged), so Comparator can keep its sandbox.
+
+## Mathlib rebuild
+
+[scripts/03-mathlib-rebuild.sh](scripts/03-mathlib-rebuild.sh) deletes every compiled file of Mathlib
+and its dependencies from a clean clone and rebuilds them from source with no network (8,712 jobs,
+all succeeded). Compared with the official cache ([results/mathlib/](results/mathlib/)):
+
+- 8,689 `.olean` files are byte-identical.
+- 10 exist only in the cache: `Cache/*`, the `lake exe cache` tool, which is not part of the Mathlib
+  library and is not built by `lake build Mathlib`.
+- 1 differs: `Mathlib/Combinatorics/SimpleGraph/Walk/Operations.olean`. Rebuilding only this module
+  on top of the cache, twice, gives the same file both times, but a third hash, different from both
+  the cache and the full rebuild. The output for this module depends on how it was built, so a
+  hash difference does not mean a different source. A declaration-level comparison is pending.
 
 ## What a pass would and would not show
 
