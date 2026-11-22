@@ -1,0 +1,91 @@
+BuildAid: exit 0, 0 duplicate-declaration errors, checked 0 declarations
+CompanionTheory: stopped: memory
+Development: stopped: memory
+Formalism: stopped: memory
+GroundTheory: stopped: memory
+Lemmata: stopped: memory
+Main: exit 0, 0 duplicate-declaration errors, checked 5 declarations
+PositivityTheory: stopped: memory
+ReciprocityTheory: stopped: memory
+Statements: exit 0, 0 duplicate-declaration errors, checked 5 declarations
+Supplements: exit 0, 0 duplicate-declaration errors, checked 4 declarations
+Init: exit 1, 25 duplicate-declaration errors, 
+Std: exit 1, 6 duplicate-declaration errors, 
+Lean: exit 1, 2 duplicate-declaration errors, 
+LeanSearchClient: exit 0, 0 duplicate-declaration errors, checked 192 declarations
+Qq: exit 0, 0 duplicate-declaration errors, checked 567 declarations
+Aesop: exit 0, 0 duplicate-declaration errors, checked 5900 declarations
+Batteries: exit 0, 0 duplicate-declaration errors, checked 9623 declarations
+ImportGraph: exit 0, 0 duplicate-declaration errors, checked 84 declarations
+Plausible: exit 0, 0 duplicate-declaration errors, checked 579 declarations
+ProofWidgets: exit 0, 0 duplicate-declaration errors, checked 1065 declarations
+Mathlib: stopped: memory
+
+lean4lean found a problem in Init.GetElem:
+at dite.congr_simp: (kernel) constant has already been declared 'dite.congr_simp'
+lean4lean found a problem in Init.Internal.Order.Lemmas:
+at Array.foldlM.loop.eq_1: (kernel) constant has already been declared 'Array.foldlM.loop.eq_1'
+lean4lean found a problem in Init.Data.Iterators.Lemmas.Combinators.FlatMap:
+at Std.Iter.step.eq_1: (kernel) constant has already been declared 'Std.Iter.step.eq_1'
+lean4lean found a problem in Init.Data.String.Search:
+at String.pos.congr_simp: (kernel) constant has already been declared 'String.pos.congr_simp'
+lean4lean found a problem in Init.Data.String.Substring:
+at String.pos.congr_simp: (kernel) constant has already been declared 'String.pos.congr_simp'
+lean4lean found a problem in Init.Data.String.Modify:
+at String.Pos.byte.congr_simp: (kernel) constant has already been declared 'String.Pos.byte.congr_simp'
+lean4lean found a problem in Init.Data.String.Basic:
+at False.elim.congr_simp: (kernel) constant has already been declared 'False.elim.congr_simp'
+lean4lean found a problem in Init.Data.String.Decode:
+at String.utf8EncodeChar.eq_def: (kernel) constant has already been declared 'String.utf8EncodeChar.eq_def'
+lean4lean found a problem in Init.Data.String.Lemmas.Pattern.Char:
+at String.Slice.Pos.revSkipWhile._unary.induct_unfolding: (kernel) constant has already been declared 'String.Slice.Pos.revSkipWhile._unary.induct_unfolding'
+lean4lean found a problem in Init.Data.String.Lemmas.Pattern.Split.Char:
+at String.Slice.Pattern.Model.split._unary.induct_unfolding: (kernel) constant has already been declared 'String.Slice.Pattern.Model.split._unary.induct_unfolding'
+lean4lean found a problem in Init.Data.String.Lemmas.Pattern.String.ForwardPattern:
+at String.Slice.Pos.skipWhile._unary.induct_unfolding: (kernel) constant has already been declared 'String.Slice.Pos.skipWhile._unary.induct_unfolding'
+lean4lean found a problem in Init.Data.UInt.IntToBitVec:
+at BitVec.ofNatLT.congr_simp: (kernel) constant has already been declared 'BitVec.ofNatLT.congr_simp'
+lean4lean found a problem in Init.Data.Nat.Sqrt.Basic:
+at dite.congr_simp: (kernel) constant has already been declared 'dite.congr_simp'
+lean4lean found a problem in Init.Data.List.ToArray:
+at List.find?.eq_2: (kernel) constant has already been declared 'List.find?.eq_2'
+lean4lean found a problem in Init.Data.List.Perm:
+at List.insertIdx.eq_1: (kernel) constant has already been declared 'List.insertIdx.eq_1'
+lean4lean found a problem in Init.Data.List.Erase:
+at List.eraseIdx.eq_2: (kernel) constant has already been declared 'List.eraseIdx.eq_2'
+lean4lean found a problem in Init.Data.List.Impl:
+at List.take.eq_2: (kernel) constant has already been declared 'List.take.eq_2'
+lean4lean found a problem in Init.Data.List.TakeDrop:
+at List.drop.eq_2: (kernel) constant has already been declared 'List.drop.eq_2'
+lean4lean found a problem in Init.Data.List.Nat.InsertIdx:
+at List.insertIdx.eq_1: (kernel) constant has already been declared 'List.insertIdx.eq_1'
+lean4lean found a problem in Init.Data.List.Nat.Modify:
+at List.modify.eq_1: (kernel) constant has already been declared 'List.modify.eq_1'
+lean4lean found a problem in Init.Data.List.Sort.Lemmas:
+at List.zipIdx.eq_2: (kernel) constant has already been declared 'List.zipIdx.eq_2'
+lean4lean found a problem in Init.Data.Array.OfFn:
+at _private.Init.Data.Array.Basic.0.Array.ofFn.go.congr_simp: (kernel) constant has already been declared '_private.Init.Data.Array.Basic.0.Array.ofFn.go.congr_simp'
+lean4lean found a problem in Init.Data.Array.Int:
+at List.max.congr_simp: (kernel) constant has already been declared 'List.max.congr_simp'
+lean4lean found a problem in Init.Data.Array.Nat:
+at List.max.congr_simp: (kernel) constant has already been declared 'List.max.congr_simp'
+lean4lean found a problem in Init.Data.Option.Attach:
+at Option.toList.eq_2: (kernel) constant has already been declared 'Option.toList.eq_2'
+lean4lean found a problem in Std.Data.DTreeMap.Internal.Zipper:
+at Std.IterM.step.eq_1: (kernel) constant has already been declared 'Std.IterM.step.eq_1'
+lean4lean found a problem in Std.Data.DTreeMap.Internal.Operations:
+at cast.congr_simp: (kernel) constant has already been declared 'cast.congr_simp'
+lean4lean found a problem in Std.Data.DTreeMap.Internal.Balancing:
+at False.elim.congr_simp: (kernel) constant has already been declared 'False.elim.congr_simp'
+lean4lean found a problem in Std.Data.Iterators.Lemmas.Combinators.Monadic.TakeWhile:
+at Std.IterM.step.eq_1: (kernel) constant has already been declared 'Std.IterM.step.eq_1'
+lean4lean found a problem in Std.Data.Iterators.Lemmas.Equivalence.StepCongr:
+at Quot.lift.congr_simp: (kernel) constant has already been declared 'Quot.lift.congr_simp'
+lean4lean found a problem in Std.Data.Internal.List.Associative:
+at cast.congr_simp: (kernel) constant has already been declared 'cast.congr_simp'
+lean4lean found a problem in Lean.Compiler.NameMangling:
+at Eq.ndrec_symm.congr_simp: (kernel) constant has already been declared 'Eq.ndrec_symm.congr_simp'
+lean4lean found a problem in Lean.Elab.Tactic.Omega.MinNatAbs:
+at Ne.eq_1: (kernel) constant has already been declared 'Ne.eq_1'
+lean4lean found a problem in Mathlib.Topology.Connected.Clopen:
+at Quotient.lift.congr_simp: (kernel) constant has already been declared 'Quotient.lift.congr_simp'
