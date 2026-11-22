@@ -81,7 +81,9 @@ all succeeded). Compared with the official cache ([results/mathlib/](results/mat
 - 1 differs: `Mathlib/Combinatorics/SimpleGraph/Walk/Operations.olean`. Rebuilding only this module
   on top of the cache, twice, gives the same file both times, but a third hash, different from both
   the cache and the full rebuild. The output for this module depends on how it was built, so a
-  hash difference does not mean a different source. A declaration-level comparison is pending.
+  hash difference does not mean a different source. Nothing from this module reaches the judged
+  proof: the solution export contains the name component `Walk` only under the project's own
+  `InterlacingWalks` namespace, and no `SimpleGraph.Walk` name at all.
 
 ## What a pass would and would not show
 
