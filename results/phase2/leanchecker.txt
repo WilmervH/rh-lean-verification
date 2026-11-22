@@ -1,0 +1,4 @@
+leanchecker --fresh Main (Lean v4.33.1)
+exit code: 0
+output: none
+wall time: 21 h 11 min (single thread), peak memory about 105 GB
